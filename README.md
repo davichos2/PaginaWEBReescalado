@@ -56,7 +56,6 @@ python -m venv venv
 source venv/bin/activate  # En Windows: venv\Scripts\activate
 
 # Instalar dependencias
-pip install fastapi uvicorn python-multipart opencv-python numpy torch torchvision moviepy tqdm realesrgan
+pip install fastapi uvicorn python-multipart opencv-python numpy torch torchvision moviepy tqdm
 
-# Instalar FFmpeg estático (Recomendado para servidores Linux/Vast.ai)
-# Ver scripts de instalación en la documentación interna
+# Instalar FFmpeg estático (Recomendado para servidores Linux)
