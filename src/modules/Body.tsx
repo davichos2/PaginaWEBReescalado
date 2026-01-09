@@ -1,22 +1,24 @@
 import React, { useState, useRef } from "react";
+import UserManualModal from "./UserManual";
 
 export default function Body() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [showAdvanced, setShowAdvanced] = useState<boolean>(false);
+  const [showManual, setShowManual] = useState<boolean>(false);
   const [processingStatus, setProcessingStatus] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const API_BASE = "https://unbenumbed-flutey-marlin.ngrok-free.dev";
+  const API_BASE = "https://unfugitively-uncarpentered-karie.ngrok-free.dev";
 
   const [params, setParams] = useState({
     noise: true,
-    noise_d: 9,
-    noise_sigmaColor: 75,
-    noise_sigmaSpace: 75,
+    noise_d: 5,
+    noise_sigmaColor: 30,
+    noise_sigmaSpace: 30,
     contrast: true,
-    contrast_clipLimit: 2.0,
+    contrast_clipLimit: 1.5,
     contrast_tileGridSize: "8,8",
     rescale: true,
     videoReescaled: true
@@ -118,7 +120,7 @@ export default function Body() {
 
             if (json.status === "processing") {
               setProcessingStatus("Procesando...");
-              setTimeout(pollResult, 5000);
+              setTimeout(pollResult, 15000);
               return;
             } else if (json.status === "error") {
               alert("Error: " + (json.details || json.error || "Error desconocido"));
@@ -175,8 +177,13 @@ export default function Body() {
     </div>
   );
 
+  
+
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-100 p-10">
+      {showManual && <UserManualModal onClose={() => setShowManual(false)} />}
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-6 text-cyan-900">
           🎬 Reescala tus videos
@@ -213,6 +220,13 @@ export default function Body() {
               >
                 {showAdvanced ? "Ocultar" : "Mostrar"}
               </button>
+
+              <button
+                type="button"
+                onClick={() => setShowManual(true)}
+                className="text-sm bg-blue-100 text-blue-700 hover:bg-blue-200 px-3 py-1 rounded-full transition-colors">
+                  ❓ Ayuda
+                </button>
             </div>
 
             {showAdvanced && (
